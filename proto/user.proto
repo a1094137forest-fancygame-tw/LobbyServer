@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "./user";
+
+service User {
+    rpc GetMemberList(EmptyReq)returns(GetMemberListRes);
+    rpc SetMemberData(SetMember)returns(SetMemberRes);
+    rpc KickOutMember(KickOutMemberInfo)returns(KickOutMemberRes);
+}
+
+
+message EmptyReq{}
+
+// GetMemberList
+message GetMemberListRes{
+    int64 StatusCode = 1;
+    string Message = 2;
+    MemberListInfo Data = 3;
+}
+
+message MemberListInfo{
+    repeated MemberList memberList = 1;
+}
+
+message MemberList{
+    string account = 1;
+    string password = 2;
+    AvatarEnum avatar = 3;
+    GenderEnum gender = 4;
+    int64 lastLoginTime = 5;
+    int64 lastLogoutTime = 6;
+    int64 balance = 7;
+}
+enum AvatarEnum{
+    ZERO = 0;
+    ONE = 1;
+}
+
+enum GenderEnum{
+    GIRL = 0;
+    BOY = 1;
+}
+
+// SetMember
+message SetMember{
+    string Account = 1;
+    string Password = 2;
+    AvatarEnum Gender = 3;
+    GenderEnum Avatar = 4;
+    int64 Balance = 5;
+}
+
+message SetMemberRes{
+    int64 StatusCode = 1;
+    string Message = 2;
+}
+
+// KickOutMember
+message KickOutMemberInfo{
+    string Account = 1;
+    int64 Balance = 2;
+}
+
+message KickOutMemberRes{
+    int64 StatusCode = 1;
+    string Message = 2;
+}
